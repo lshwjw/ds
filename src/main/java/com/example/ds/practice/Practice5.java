@@ -45,13 +45,17 @@ public class Practice5 {
             return s;
         }
         String longestText = "";
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = i; j < s.length(); j++) {
-                boolean flag = judge(s, i, j);
-                if (flag && (j - i + 1 > longestText.length())) {
+        int i = 0;
+        int j = 0;
+        while (i < s.length() && j < s.length()) {
+            boolean flag = judge(s, i, j);
+            if (flag) {
+                if (j - i + 1 > longestText.length()) {
                     longestText = s.substring(i, j + 1);
                 }
+                i++;
             }
+            j++;
         }
         return longestText;
     }
