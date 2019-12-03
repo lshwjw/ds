@@ -44,24 +44,26 @@ public class Practice5 {
         if (s.length() == 1) {
             return s;
         }
-        String longestText = "";
-        for (int k = 0; k < s.length(); k++) {
-            int i = k;
-            int j = k;
-            while (i >= 0 && j < s.length()) {
-                boolean flag = judge(s, i, j);
-                if (!flag) {
-                    break;
-                } else {
-                    if (j - i + 1 > longestText.length()) {
-                        longestText = s.substring(i, j + 1);
-                    }
-                    i--;
-                    j++;
-                }
+        int start = 0;
+        int end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expand(s, i, i);
+            int len2 = expand(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
             }
         }
-        return longestText;
+        return s.substring(start, end + 1);
+    }
+
+    private int expand(String s, int start, int end) {
+        while (start >=0 && end < s.length() && s.charAt(start) == s.charAt(end)) {
+            start--;
+            end++;
+        }
+        return end - start - 1;
     }
 
     private boolean judge(String s, int start, int end) {
