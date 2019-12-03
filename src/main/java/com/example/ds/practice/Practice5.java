@@ -37,6 +37,11 @@ public class Practice5 {
         return longestText;
     }
 
+    /**
+     * 中心扩散法
+     * @param s
+     * @return
+     */
     public String longestPalindrome2(String s) {
         if (s == null || s.length() == 0) {
             return "";
