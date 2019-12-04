@@ -1,5 +1,8 @@
 package com.example.ds.practice;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Author: weijianwei
  * @Date: 2019-12-03 20:28
@@ -34,6 +37,37 @@ package com.example.ds.practice;
 public class Practice6 {
 
     public String convert(String s, int numRows) {
-        return null;
+        if (s == null) {
+            return "";
+        }
+        if (numRows == 1) {
+            return s;
+        }
+        List<StringBuilder> rows = new ArrayList<>();
+        for (int i = 0; i < Math.min(numRows, s.length()); i++) {
+            rows.add(new StringBuilder());
+        }
+        int currentRow = 0;
+        boolean flag = false;
+        for(int i = 0; i < s.length(); i++) {
+            rows.get(currentRow).append(s.charAt(i));
+            if (currentRow == 0 || currentRow == numRows - 1) {
+                flag = !flag;
+            }
+            currentRow += flag ? 1 : -1;
+        }
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder row : rows) {
+            result.append(row);
+        }
+        return result.toString();
+    }
+
+    public static void main(String[] args) {
+        Practice6 practice = new Practice6();
+        System.out.println(practice.convert("AB", 1));
+        System.out.println(practice.convert("ABCDEFGH", 3));
+        System.out.println(practice.convert("LEETCODEISHIRING", 3));
+        System.out.println(practice.convert("PAYPALISHIRING", 4));
     }
 }
