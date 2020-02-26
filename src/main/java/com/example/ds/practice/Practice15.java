@@ -28,7 +28,7 @@ public class Practice15 {
         }
         // 排序
         Arrays.sort(nums);
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < length - 2; i++) {
             // 第一个数大于0，三数之和必定大于0，结束循环
             if (nums[i] > 0) {
                 break;
@@ -39,6 +39,16 @@ public class Practice15 {
             }
             int p = i + 1;
             int q = length - 1;
+            // 判断最小值
+            int min = nums[i] + nums[p] + nums[p + 1];
+            if (min > 0) {
+                continue;
+            }
+            // 判断最大值
+            int max = nums[i] + nums[q] + nums[q - 1];
+            if (max < 0) {
+                continue;
+            }
             while (p < q) {
                 int sum = nums[i] + nums[p] + nums[q];
                 if (sum < 0) {
@@ -46,11 +56,7 @@ public class Practice15 {
                 } else if (sum > 0) {
                     q--;
                 } else {
-                    List<Integer> tmpList = new ArrayList<>();
-                    tmpList.add(nums[i]);
-                    tmpList.add(nums[p]);
-                    tmpList.add(nums[q]);
-                    result.add(tmpList);
+                    result.add(Arrays.asList(nums[i], nums[p], nums[q]));
                     // 去重
                     while (p < q && nums[p] == nums[p + 1]) {
                         p++;
@@ -68,8 +74,9 @@ public class Practice15 {
     }
 
     public static void main(String[] args) {
-        int[] nums = {-1, 0, 1, 2, -1, -4};
+//        int[] nums = {-1, 0, 1, 2, -1, -4};
 //        int[] nums = {0, 0, 0, 0};
+        int[] nums = {-1, 0, 1};
         Practice15 practice = new Practice15();
         System.out.println(practice.threeSum(nums));
     }

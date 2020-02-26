@@ -1,5 +1,7 @@
 package com.example.ds.practice;
 
+import java.util.Arrays;
+
 /**
  * @Author: weijianwei
  * @Date: 2020-01-02 21:21
@@ -54,18 +56,36 @@ public class Practice26 {
         for (int i = 0; i < length; i++) {
             if (nums[i] != nums[q]) {
                 nums[p] = nums[q];
-                q = i;
                 p++;
+                q = i;
             }
         }
-        for (int i = p; i < nums.length; i++) {
-            nums[i] = 0;
+        nums[p] = nums[q];
+        return p + 1;
+    }
+
+    public int removeDuplicates2(int[] nums) {
+        if (nums == null) {
+            return 0;
         }
-        return nums.length;
+        int length = nums.length;
+        if (length < 2) {
+            return length;
+        }
+        int i = 0;
+        for (int j = 1; j < length; j++) {
+            if (nums[j] != nums[i]) {
+                i++;
+                nums[i] = nums[j];
+            }
+        }
+        return i + 1;
     }
 
     public static void main(String[] args) {
-        int[] nums = null;
+        int[] nums = {0,0,1,1,1,2,2,3,3,4};
         Practice26 practice = new Practice26();
+        System.out.println(practice.removeDuplicates2(nums));
+        System.out.println(Arrays.toString(nums));
     }
 }

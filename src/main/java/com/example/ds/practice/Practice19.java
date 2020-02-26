@@ -71,7 +71,51 @@ public class Practice19 {
         return head;
     }
 
-    public static class ListNode {
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
+        int size = 0;
+        ListNode tmp = head;
+        while (tmp != null) {
+            size++;
+            tmp = tmp.next;
+        }
+        if (size == 1) {
+            return null;
+        }
+        int index = 0;
+        tmp = head;
+        if (n == 1) {
+            while (index < size) {
+                if (index == size - 2) {
+                    tmp.next = null;
+                    break;
+                }
+                index++;
+                tmp = tmp.next;
+            }
+        } else if (n == size) {
+            head = tmp.next;
+            tmp.next = null;
+        } else {
+            ListNode one = tmp;
+            ListNode two = tmp;
+            while (index < size) {
+                if (index == size - n - 1) {
+                    one = tmp;
+                } else if (index == size - n) {
+                    two = tmp;
+                } else if (index == size - n + 1) {
+                    one.next = tmp;
+                    two.next = null;
+                    break;
+                }
+                index++;
+                tmp = tmp.next;
+            }
+        }
+        return head;
+    }
+
+    private static class ListNode {
         int val;
         ListNode next;
 
@@ -80,7 +124,7 @@ public class Practice19 {
         }
     }
 
-    public void print(ListNode head) {
+    private void print(ListNode head) {
         if(head == null) {
             return;
         }
@@ -94,13 +138,13 @@ public class Practice19 {
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
-//        head.next = new ListNode(2);
-//        head.next.next = new ListNode(3);
-//        head.next.next.next = new ListNode(4);
-//        head.next.next.next.next = new ListNode(5);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(4);
+        head.next.next.next.next = new ListNode(5);
         Practice19 practice = new Practice19();
         practice.print(head);
-        ListNode result = practice.removeNthFromEnd(head, 1);
+        ListNode result = practice.removeNthFromEnd2(head, 2);
         System.out.println(result == null ? "" : result.val);
         practice.print(result);
 

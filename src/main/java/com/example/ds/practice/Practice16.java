@@ -29,6 +29,22 @@ public class Practice16 {
             int p = i + 1;
             int q  = length - 1;
             while (p < q) {
+                // 判断最小值
+                int min = nums[i] + nums[p] + nums[p + 1];
+                if (target < min) {
+                    if (Math.abs(min - target) < Math.abs(result - target)) {
+                        result = min;
+                    }
+                    break;
+                }
+                //判断最大值
+                int max = nums[i] + nums[q] + nums[q - 1];
+                if (target > max) {
+                    if (Math.abs(max - target) < Math.abs(result - target)) {
+                        result = max;
+                    }
+                    break;
+                }
                 int sum = nums[i] + nums[p] + nums[q];
                 if (sum > target) {
                     if (Math.abs(sum - target) < Math.abs(result - target)) {
