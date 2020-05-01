@@ -32,6 +32,11 @@ package com.example.ds.practice;
  */
 public class Practice38 {
 
+    /**
+     * TODO 未完成！
+     * @param n
+     * @return
+     */
     public String countAndSay(int n) {
         String tmp = "";
         for (int i = 1; i <= n; i++) {

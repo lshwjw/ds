@@ -1,6 +1,7 @@
 package com.example.ds.practice;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,38 +36,40 @@ public class Practice39 {
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(candidates);
         int sum = 0;
         List<Integer> tmp = new ArrayList<>();
-        for (int i = 0; i < candidates.length; i++) {
-            int candidate = candidates[i];
-            while (true) {
-                sum += candidate;
-                if (sum == target) {
-                    tmp.add(candidate);
-                    result.add(tmp);
-                    break;
-                } else if (sum > target) {
-                    break;
-                } else {
-                    tmp.add(candidate);
-                }
-            }
-        }
-        return null;
+        sum(result, tmp, candidates, sum, target);
+        return result;
     }
 
-    private void sum(List<List<Integer>> result, List<Integer> tmp, int[] candidates, int layer, int sum, int target) {
-        if (layer >= candidates.length) {
-            return;
+    private void sum(List<List<Integer>> result, List<Integer> tmp, int[] candidates, int sum, int target) {
+        for (int i = 0; i < candidates.length; i++) {
+            int candidate = candidates[i];
+            if (!tmp.isEmpty() && candidate < tmp.get(tmp.size() - 1)) {
+                continue;
+            }
+            int tmpSum = sum + candidate;
+            if (tmpSum == target) {
+                tmp.add(candidate);
+                result.add(tmp);
+                break;
+            } else if (tmpSum < target) {
+                List<Integer> copy = new ArrayList<>();
+                copy.addAll(tmp);
+                copy.add(candidate);
+                sum(result, copy, candidates, tmpSum, target);
+            } else {
+                break;
+            }
         }
-        int candidate = candidates[layer];
-        sum = sum + candidate;
-        if (sum == target) {
-            tmp.add(candidate);
-            result.add(tmp);
-        } else if (sum < target) {
-            tmp.add(candidate);
+    }
 
-        }
+    public static void main(String[] args) {
+        Practice39 practice = new Practice39();
+        int[] candidates = {2,3,5};
+        int target = 8;
+        List<List<Integer>> result = practice.combinationSum(candidates, target);
+        System.out.println(result);
     }
 }
