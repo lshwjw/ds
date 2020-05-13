@@ -29,7 +29,7 @@ public class Practice104 {
      */
     public int maxDepth(TreeNode root) {
         if (root == null) {
-            return 1;
+            return 0;
         }
         int left = maxDepth(root.left);
         int right = maxDepth(root.right);
@@ -61,6 +61,9 @@ public class Practice104 {
      * @return
      */
     public int maxDepth3(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
         int len = 0;
         LinkedList<TreeNode> queue = new LinkedList<>();
         queue.add(root);
