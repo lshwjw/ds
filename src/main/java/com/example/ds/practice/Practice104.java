@@ -1,7 +1,6 @@
 package com.example.ds.practice;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 104. 二叉树的最大深度
@@ -23,23 +22,25 @@ import java.util.List;
  */
 public class Practice104 {
 
+    /**
+     * 深度优先遍历
+     * @param root
+     * @return
+     */
     public int maxDepth(TreeNode root) {
-        int len = 0;
-        List<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            queue.remove(root);
-            if (root.left != null) {
-                queue.add(root.left);
-            }
-            if (root.right != null) {
-                queue.add(root.right);
-            }
-            len++;
+        if (root == null) {
+            return 1;
         }
-        return len;
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return Math.max(left, right) + 1;
     }
 
+    /**
+     * 深度优先遍历
+     * @param root
+     * @return
+     */
     public int maxDepth2(TreeNode root) {
         return dfs(root, 0);
     }
@@ -52,6 +53,31 @@ public class Practice104 {
         int left = dfs(root.left, len);
         int right = dfs(root.right, len);
         return Math.max(left, right);
+    }
+
+    /**
+     * 广度优先遍历
+     * @param root
+     * @return
+     */
+    public int maxDepth3(TreeNode root) {
+        int len = 0;
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            len++;
+            int levelSize = queue.size();
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode cur = queue.pollFirst();
+                if (cur.left != null) {
+                    queue.add(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.add(cur.right);
+                }
+            }
+        }
+        return len;
     }
 
     public static void main(String[] args) {
