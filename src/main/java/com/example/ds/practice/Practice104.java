@@ -1,6 +1,7 @@
 package com.example.ds.practice;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * 104. 二叉树的最大深度
@@ -65,18 +66,18 @@ public class Practice104 {
             return 0;
         }
         int len = 0;
-        LinkedList<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
         while (!queue.isEmpty()) {
             len++;
             int levelSize = queue.size();
             for (int i = 0; i < levelSize; i++) {
-                TreeNode cur = queue.pollFirst();
+                TreeNode cur = queue.poll();
                 if (cur.left != null) {
-                    queue.add(cur.left);
+                    queue.offer(cur.left);
                 }
                 if (cur.right != null) {
-                    queue.add(cur.right);
+                    queue.offer(cur.right);
                 }
             }
         }

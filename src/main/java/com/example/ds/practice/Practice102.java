@@ -1,8 +1,6 @@
 package com.example.ds.practice;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 102. 二叉树的层序遍历
@@ -32,8 +30,8 @@ public class Practice102 {
         if (root == null) {
             return result;
         }
-        LinkedList<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
         while (!queue.isEmpty()) {
             List<Integer> tmp = new ArrayList<>();
             int levelSize = queue.size();
@@ -41,10 +39,10 @@ public class Practice102 {
                 TreeNode poll = queue.poll();
                 tmp.add(poll.val);
                 if (poll.left != null) {
-                    queue.add(poll.left);
+                    queue.offer(poll.left);
                 }
                 if (poll.right != null) {
-                    queue.add(poll.right);
+                    queue.offer(poll.right);
                 }
             }
             result.add(tmp);
