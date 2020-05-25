@@ -2,6 +2,7 @@ package com.example.ds.practice;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @Author: weijianwei
@@ -41,6 +42,65 @@ public class Practice101 {
         }
         TreeNode leftRoot = root.left;
         TreeNode rightRoot = root.right;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(leftRoot);
+        queue.offer(rightRoot);
+        TreeNode cur1;
+        TreeNode cur2;
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            for (int i = 0; i < levelSize / 2; i++) {
+                cur1 = queue.poll();
+                cur2 = queue.poll();
+                if (cur1 == null && cur2 == null) {
+                    continue;
+                }
+                if (cur1 == null || cur2 == null || cur1.val != cur2.val) {
+                    return false;
+                }
+                queue.offer(cur1.left);
+                queue.offer(cur2.right);
+                queue.offer(cur1.right);
+                queue.offer(cur2.left);
+            }
+        }
+        return true;
+    }
+
+    public boolean isSymmetric2(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        TreeNode leftRoot = root.left;
+        TreeNode rightRoot = root.right;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(leftRoot);
+        queue.offer(rightRoot);
+        TreeNode cur1;
+        TreeNode cur2;
+        while (!queue.isEmpty()) {
+            cur1 = queue.poll();
+            cur2 = queue.poll();
+            if (cur1 == null && cur2 == null) {
+                continue;
+            }
+            if (cur1 == null || cur2 == null || cur1.val != cur2.val) {
+                return false;
+            }
+            queue.offer(cur1.left);
+            queue.offer(cur2.right);
+            queue.offer(cur1.right);
+            queue.offer(cur2.left);
+        }
+        return true;
+    }
+
+    public boolean isSymmetric3(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        TreeNode leftRoot = root.left;
+        TreeNode rightRoot = root.right;
         Deque<TreeNode> s1 = new LinkedList<>();
         s1.push(leftRoot);
         Deque<TreeNode> s2 = new LinkedList<>();
@@ -64,7 +124,7 @@ public class Practice101 {
         return true;
     }
 
-    public boolean isSymmetric2(TreeNode root) {
+    public boolean isSymmetric4(TreeNode root) {
         if (root == null) {
             return true;
         }
@@ -78,12 +138,7 @@ public class Practice101 {
         if (leftRoot == null || rightRoot == null || leftRoot.val != rightRoot.val) {
             return false;
         }
-        boolean flag = judge(leftRoot.left, rightRoot.right);
-        if (flag) {
-            return judge(leftRoot.right, rightRoot.left);
-        } else {
-            return false;
-        }
+        return judge(leftRoot.left, rightRoot.right) && judge(leftRoot.right, rightRoot.left);
     }
 
     public static void main(String[] args) {
