@@ -24,7 +24,7 @@ import java.util.Queue;
 public class Practice104 {
 
     /**
-     * 深度优先遍历
+     * 莫里斯遍历
      * @param root
      * @return
      */
@@ -32,8 +32,58 @@ public class Practice104 {
         if (root == null) {
             return 0;
         }
-        int left = maxDepth(root.left);
-        int right = maxDepth(root.right);
+        TreeNode cur = root;
+        TreeNode pre;
+        int level = 0;
+        int max = Integer.MIN_VALUE;
+        while (cur != null) {
+            if (cur.left == null) {
+                level++;
+                cur = cur.right;
+            } else {
+                pre = cur.left;
+                int preLen = 1;
+                while (pre.right != null && pre.right != cur) {
+                    pre = pre.right;
+                    preLen++;
+                }
+                if (pre.right == null) {
+                    pre.right = cur;
+                    cur = cur.left;
+                    level++;
+                } else {
+                    if (pre.left == null) {
+                        max = Math.max(level, max);
+                    }
+                    pre.right = null;
+                    cur = cur.right;
+                    level -= preLen;
+                }
+            }
+        }
+        int finalRight = 1;
+        cur = root;
+        while (cur.right != null) {
+            finalRight++;
+            cur = cur.right;
+        }
+        if (cur.left == null && cur.right == null) {
+            max = Math.max(finalRight, max);
+        }
+        return max;
+    }
+
+    /**
+     * 深度优先遍历
+     * @param root
+     * @return
+     */
+    public int maxDepth1(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = maxDepth1(root.left);
+        int right = maxDepth1(root.right);
         return Math.max(left, right) + 1;
     }
 
@@ -92,5 +142,6 @@ public class Practice104 {
         root.right.left = new TreeNode(15);
         root.right.right = new TreeNode(7);
         System.out.println(practice.maxDepth(root));
+        System.out.println(practice.maxDepth3(root));
     }
 }
